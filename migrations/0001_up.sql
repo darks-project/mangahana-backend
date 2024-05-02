@@ -8,7 +8,7 @@ CREATE TABLE users.users (
   username    TEXT NOT NULL,
   description TEXT,
   photo       TEXT,
-  role_id     INTEGER,
+  role_id     INTEGER DEFAULT 1,
   is_banned   BOOLEAN NOT NULL DEFAULT FALSE,
   created_at  TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -30,6 +30,7 @@ CREATE TABLE users.permissions (
   id   SERIAL PRIMARY KEY,
   name TEXT NOT NULL
 );
+INSERT INTO users.permissions (name) VALUES ('approve_team');
 
 
 
@@ -44,7 +45,7 @@ CREATE TABLE teams.teams (
   name        VARCHAR(64) NOT NULL,
   description TEXT,
   photo       TEXT,
-  verified    BOOLEAN NOT NULL DEFAULT FALSE,
+  approved    BOOLEAN NOT NULL DEFAULT FALSE,
   created_at  TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/Netflix/go-env v0.0.0-20220526054621-78278af1949d // indirect
 	github.com/cockroachdb/apd v1.1.0 // indirect
 	github.com/gofrs/uuid v4.4.0+incompatible // indirect
 	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect

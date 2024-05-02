@@ -1,6 +1,7 @@
 package users
 
 import (
+	"api/internal/core"
 	"api/internal/infrastructure"
 
 	"golang.org/x/crypto/bcrypt"
@@ -31,7 +32,34 @@ func (u *users) LogIn(email, password string) (string, error) {
 
 	return u.repo.AddSession(user.Id)
 }
-func (u *users) SignUp(email, password string) (string, error)
 
-func (u *users) GetOneById(userId int) map[string]interface{}
-func (u *users) GetIdByAccessToken(accessToken string) int
+func (u *users) SignUp(email, password string) (string, error) {
+	return "", nil
+}
+
+func (u *users) GetOneById(userId int) (map[string]interface{}, error) {
+	output := make(map[string]interface{})
+
+	user, err := u.repo.GetById(userId)
+	if err != nil {
+		return nil, err
+	}
+
+	output["id"] = user.Id
+	output["username"] = user.Username
+	output["photo"] = user.Photo
+	output["description"] = user.Description
+
+	return output, nil
+}
+
+func (u *users) GetBySession(token string) (core.User, error) {
+	var user core.User
+
+	id, err := u.repo.GetIdBySession(token)
+	if err != nil {
+		return user, err
+	}
+
+	return u.repo.GetById(id)
+}

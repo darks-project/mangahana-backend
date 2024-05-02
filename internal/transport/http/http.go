@@ -1,6 +1,8 @@
 package http
 
 import (
+	"api/internal/application"
+	"api/internal/transport/http/users"
 	"net/http"
 	"time"
 
@@ -8,12 +10,14 @@ import (
 )
 
 type handler struct {
-	router *echo.Echo
+	useCase *application.UseCase
+	router  *echo.Echo
 }
 
-func New() *handler {
+func New(useCase *application.UseCase) *handler {
 	return &handler{
-		router: echo.New(),
+		useCase: useCase,
+		router:  echo.New(),
 	}
 }
 
@@ -28,12 +32,13 @@ func (h *handler) Run(socket string) error {
 }
 
 func (h *handler) getRouter() http.Handler {
-	baseUrl := h.router.Group("/api/v1")
-	h.routesRegister(baseUrl)
+	h.routesRegister()
 
 	return h.router
 }
 
-func (h *handler) routesRegister(r *echo.Group) {
+func (h *handler) routesRegister() {
+	api := h.router.Group("/api/v1")
 
+	users.Register(api, h.useCase.Users, h)
 }

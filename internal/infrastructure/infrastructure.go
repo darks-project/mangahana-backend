@@ -20,6 +20,9 @@ func New(db *sqlx.DB) *Repo {
 type IUsers interface {
 	AddSession(userId int) (string, error)
 
+	HasPermission(userId int, permissionName string) error
+
+	GetIdBySession(token string) (int, error)
 	GetById(userId int) (core.User, error)
 	GetByEmail(email string) (core.User, error)
 }

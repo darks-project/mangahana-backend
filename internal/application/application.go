@@ -2,6 +2,7 @@ package application
 
 import (
 	"api/internal/application/users"
+	"api/internal/core"
 	"api/internal/infrastructure"
 )
 
@@ -19,6 +20,6 @@ type IUsers interface {
 	LogIn(email, password string) (string, error)
 	SignUp(email, password string) (string, error)
 
-	GetOneById(userId int) map[string]interface{}
-	GetIdByAccessToken(accessToken string) int
+	GetOneById(userId int) (map[string]interface{}, error)
+	GetBySession(accessToken string) (core.User, error)
 }

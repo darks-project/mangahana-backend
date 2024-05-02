@@ -5,8 +5,8 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-func Connect() (*sqlx.DB, error) {
-	conn, err := sqlx.Connect("pgx", "postgres://pgx_md5:secret@localhost:5432/pgx_test")
+func Connect(url string) (*sqlx.DB, error) {
+	conn, err := sqlx.Connect("pgx", url)
 	if err != nil {
 		return nil, err
 	}
@@ -15,5 +15,5 @@ func Connect() (*sqlx.DB, error) {
 		return nil, err
 	}
 
-	return nil, nil
+	return conn, nil
 }
